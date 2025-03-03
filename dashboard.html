@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - RateZap</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#ea6000">
+  <link rel="icon" href="/logo.png">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="content">
+      <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/12-PYe3kbz80dXHg2kulXrdsQ4modwZN0.png" alt="RateZap Logo" class="logo">
+      <h1 id="welcomeHeading">Welcome, John from Happy Weddings</h1>
+      
+      <div class="form-link">
+        <p>Your Form Link:</p>
+        <div class="copy-link">
+          <span id="formLink">ratezap.vercel.app/rate/1</span>
+          <button id="copyButton" class="copy-button">Copy</button>
+        </div>
+      </div>
+      
+      <div class="button-group">
+        <button class="button primary" id="downloadButton">Download Feedback</button>
+        <button class="button secondary" id="editButton">Edit Form</button>
+        <button class="button secondary" id="previewButton">Preview Form</button>
+        <button class="button secondary" id="viewButton">View Rate Form</button>
+      </div>
+      
+      <p class="feedback-text">Feedback synced to Google Sheets</p>
+      
+      <button id="logoutButton" class="button outline">Logout</button>
+    </div>
+  </div>
+
+  <script>
+    // Initialize Supabase client
+    const supabaseUrl = 'https://arwaorjkjdojbifhmnlh.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFyd2FvcmpramRvamJpZmhtbmxoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAzNjA5MDUsImV4cCI6MjA1NTkzNjkwNX0.evQb2UFUgOv0KjlRSMBbXwP4YVvByrXiXJDbpaP76Ys';
+    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+    // Check if user is logged in
+    document.addEventListener('DOMContentLoaded', async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session) {
+        window.location.href = '/login.html';
+        return;
+      }
+      
+      // For v0, we'll use dummy data
+      // In a real app, we would fetch this from Supabase
+      const ownerName = "John";
+      const businessName = "Happy Weddings";
+      const businessId = "1";
+      
+      document.getElementById('welcomeHeading').textContent = `Welcome, ${ownerName} from ${businessName}`;
+      document.getElementById('formLink').textContent = `ratezap.vercel.app/rate/${businessId}`;
+    });
+
+    // Copy form link to clipboard
+    document.getElementById('copyButton').addEventListener('click', () => {
+      const formLink = document.getElementById('formLink').textContent;
+      navigator.clipboard.writeText(formLink)
+        .then(() => {
+          const copyButton = document.getElementById('copyButton');
+          copyButton.textContent = 'Copied!';
+          setTimeout(() => {
+            copyButton.textContent = 'Copy';
+          }, 2000);
+        })
+        .catch(err => {
+          console.error('Failed to copy: ', err);
+        });
+    });
+
+    // Button event listeners
+    document.getElementById('downloadButton').addEventListener('click', () => {
+      alert('Download functionality will be available in the next version');
+    });
+
+    document.getElementById('editButton').addEventListener('click', () => {
+      alert('Edit functionality will be available in the next version');
+    });
+
+    document.getElementById('previewButton').addEventListener('click', () => {
+      window.location.href = '/preview.html';
+    });
+
+    document.getElementById('viewButton').addEventListener('click', () => {
+      window.location.href = '/rate/1.html';
+    });
+
+    document.getElementById('logoutButton').addEventListener('click', async () => {
+      await supabase.auth.signOut();
+      window.location.href = '/login.html';
+    });
+  </script>
+</body>
+</html>
+
