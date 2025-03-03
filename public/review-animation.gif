@@ -1,0 +1,12 @@
+// Creating an animated star rating sequence
+// Size: 200x200px
+// Colors: 
+// - Stars: #ffd700 (gold)
+// - Active star: #ea6000 (RateZap orange)
+// - Background: transparent
+// Animation:
+// 1. Stars appear one by one
+// 2. Stars light up in sequence
+// 3. Final state shows all stars in gold
+// Duration: 2 seconds, looping
+
