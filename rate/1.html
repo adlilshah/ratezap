@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rate Us - RateZap</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#ea6000">
+  <link rel="icon" href="/logo.png">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="content">
+      <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/12-PYe3kbz80dXHg2kulXrdsQ4modwZN0.png" alt="RateZap Logo" class="logo">
+      <h1 id="questionText">How would you rate us?</h1>
+      
+      <div class="rating-container">
+        <div class="star-rating">
+          <span class="star" data-rating="1">★</span>
+          <span class="star" data-rating="2">★</span>
+          <span class="star" data-rating="3">★</span>
+          <span class="star" data-rating="4">★</span>
+          <span class="star" data-rating="5">★</span>
+        </div>
+        <p class="rating-text">Select a rating</p>
+      </div>
+      
+      <button id="backButton" class="button secondary">Back</button>
+    </div>
+  </div>
+
+  <script>
+    // Initialize Supabase client
+    const supabaseUrl = 'https://arwaorjkjdojbifhmnlh.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFyd2FvcmpramRvamJpZmhtbmxoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAzNjA5MDUsImV4cCI6MjA1NTkzNjkwNX0.evQb2UFUgOv0KjlRSMBbXwP4YVvByrXiXJDbpaP76Ys';
+    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+    // Get business ID from URL
+    const businessId = '1'; // For v0, hardcoded to 1
+
+    // For v0, we'll use dummy data
+    // In a real app, we would fetch this from Supabase based on businessId
+    const question = "How would you rate us?";
+    document.getElementById('questionText').textContent = question;
+
+    // Handle star rating
+    const stars = document.querySelectorAll('.star');
+    stars.forEach(star => {
+      star.addEventListener('click', () => {
+        const rating = parseInt(star.getAttribute('data-rating'));
+        
+        // Update visual state
+        stars.forEach(s => {
+          if (parseInt(s.getAttribute('data-rating')) <= rating) {
+            s.classList.add('selected');
+          } else {
+            s.classList.remove('selected');
+          }
+        });
+        
+        // Update rating text
+        document.querySelector('.rating-text').textContent = `You selected ${rating} star${rating !== 1 ? 's' : ''}`;
+        
+        // Redirect based on rating
+        setTimeout(() => {
+          if (rating <= 3) {
+            window.location.href = `/badreview/${businessId}.html`;
+          } else {
+            window.location.href = `/goodreview/${businessId}.html`;
+          }
+        }, 500);
+      });
+    });
+
+    // Back button
+    document.getElementById('backButton').addEventListener('click', () => {
+      window.location.href = '/dashboard.html';
+    });
+  </script>
+</body>
+</html>
+
