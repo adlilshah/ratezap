@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - RateZap</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#ea6000">
+  <link rel="icon" href="/logo.png">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="content">
+      <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/12-PYe3kbz80dXHg2kulXrdsQ4modwZN0.png" alt="RateZap Logo" class="logo">
+      <h1>Welcome to RateZap</h1>
+      <img src="/review-animation.gif" alt="Review Animation" class="animation">
+      
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="password-container">
+          <input type="password" id="password" placeholder="Enter your password" required>
+          <button type="button" id="togglePassword" class="toggle-password">
+            <span class="show">Show</span>
+            <span class="hide">Hide</span>
+          </button>
+        </div>
+      </div>
+      
+      <button id="loginButton" class="button primary">Login</button>
+      <p class="signup-text">Sign Up</p>
+      
+      <div id="errorMessage" class="error-message"></div>
+    </div>
+  </div>
+
+  <script>
+    // Initialize Supabase client
+    const supabaseUrl = 'https://arwaorjkjdojbifhmnlh.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFyd2FvcmpramRvamJpZmhtbmxoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAzNjA5MDUsImV4cCI6MjA1NTkzNjkwNX0.evQb2UFUgOv0KjlRSMBbXwP4YVvByrXiXJDbpaP76Ys';
+    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+    // Toggle password visibility
+    document.getElementById('togglePassword').addEventListener('click', function() {
+      const passwordInput = document.getElementById('password');
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      this.classList.toggle('show-password');
+    });
+
+    // Handle login
+    document.getElementById('loginButton').addEventListener('click', async function() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const errorMessage = document.getElementById('errorMessage');
+      
+      if (!email || !password) {
+        errorMessage.textContent = 'Please enter both email and password';
+        return;
+      }
+      
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email,
+          password
+        });
+        
+        if (error) {
+          errorMessage.textContent = error.message;
+        } else {
+          // Store user session
+          localStorage.setItem('supabase.auth.token', JSON.stringify(data));
+          
+          // Redirect to dashboard
+          window.location.href = '/dashboard.html';
+        }
+      } catch (error) {
+        errorMessage.textContent = 'An error occurred. Please try again.';
+        console.error('Login error:', error);
+      }
+    });
+
+    // For demo purposes, pre-fill test credentials
+    document.getElementById('email').value = 'test@ratezap.com';
+    document.getElementById('password').value = 'password123';
+  </script>
+</body>
+</html>
+
