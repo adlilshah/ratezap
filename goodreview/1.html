@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Great Feedback - RateZap</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#ea6000">
+  <link rel="icon" href="/logo.png">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="content">
+      <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/12-PYe3kbz80dXHg2kulXrdsQ4modwZN0.png" alt="RateZap Logo" class="logo">
+      <h1 id="goodReviewText">Great to hear! Leave us a review.</h1>
+      
+      <button id="reviewButton" class="button secondary">Review on Google</button>
+      <button id="backButton" class="button secondary">Back</button>
+    </div>
+  </div>
+
+  <script>
+    // Initialize Supabase client
+    const supabaseUrl = 'https://arwaorjkjdojbifhmnlh.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFyd2FvcmpramRvamJpZmhtbmxoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAzNjA5MDUsImV4cCI6MjA1NTkzNjkwNX0.evQb2UFUgOv0KjlRSMBbXwP4YVvByrXiXJDbpaP76Ys';
+    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+    // Get business ID from URL
+    const businessId = '1'; // For v0, hardcoded to 1
+
+    // For v0, we'll use dummy data
+    // In a real app, we would fetch this from Supabase based on businessId
+    const goodReviewDesc = "Great to hear! Leave us a review.";
+    const gbpLink = "https://g.page/happyweddings";
+    
+    document.getElementById('goodReviewText').textContent = goodReviewDesc;
+
+    // Review button
+    document.getElementById('reviewButton').addEventListener('click', () => {
+      window.open(gbpLink, '_blank');
+    });
+
+    // Back button
+    document.getElementById('backButton').addEventListener('click', () => {
+      window.location.href = `/rate/${businessId}.html`;
+    });
+  </script>
+</body>
+</html>
+
