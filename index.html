@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RateZap - Premium Feedback Tool</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#ea6000">
+  <link rel="icon" href="/logo.png">
+  <meta name="description" content="RateZap - A premium feedback tool for business owners">
+  <script>
+    // Register service worker for PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(registration => {
+            console.log('ServiceWorker registration successful');
+          })
+          .catch(error => {
+            console.log('ServiceWorker registration failed:', error);
+          });
+      });
+    }
+
+    // Redirect to login page if not logged in
+    document.addEventListener('DOMContentLoaded', () => {
+      window.location.href = '/login.html';
+    });
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div class="content">
+      <img src="/logo.png" alt="RateZap Logo" class="logo">
+      <h1>RateZap</h1>
+      <p>Loading...</p>
+    </div>
+  </div>
+</body>
+</html>
+
