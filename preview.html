@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preview - RateZap</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#ea6000">
+  <link rel="icon" href="/logo.png">
+</head>
+<body>
+  <div class="container">
+    <div class="content">
+      <img src="/logo.png" alt="RateZap Logo" class="logo">
+      <h1>Form Preview</h1>
+      
+      <div class="preview-container">
+        <div class="preview-frame">
+          <iframe src="/rate/1.html" title="Rate Form Preview"></iframe>
+        </div>
+      </div>
+      
+      <button id="backButton" class="button secondary">Back to Dashboard</button>
+    </div>
+  </div>
+
+  <script>
+    // Back button
+    document.getElementById('backButton').addEventListener('click', () => {
+      window.location.href = '/dashboard.html';
+    });
+  </script>
+</body>
+</html>
+
